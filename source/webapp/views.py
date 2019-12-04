@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 
-def Index(request):
+def index(request, *args, **kwargs):
     return render(request, 'index.html')
 
 
@@ -81,6 +81,8 @@ def divide(request, *args, **kwargs):
             valid, error = is_valid(A, B)
             if not valid:
                 return make_response({'error': error}, 400)
+            if B == 0:
+                return make_response({'error': 'Division by zero'}, 400)
             return JsonResponse({'answer': A / B})
         else:
             return make_response({'error': 'No data provided'}, 400)
